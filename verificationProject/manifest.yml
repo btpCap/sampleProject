@@ -1,0 +1,17 @@
+---
+applications:
+ - name : verificationProject
+   path : srv/target/verificationProject-exec.jar
+   random-route : true
+   services : 
+    - demo-hanashared
+    - demo-service-uaa2
+   env: 
+    destinations: > 
+     [ 
+       { 
+         "name":"srv-api", 
+         "url":"https://cc08a18ftrial-dev-verificationproject-srv.cfapps.eu10.hana.ondemand.com/", 
+         "forwardAuthToken": true 
+       } 
+     ] 

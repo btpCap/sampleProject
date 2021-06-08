@@ -1,0 +1,10 @@
+---
+applications:
+- name: javaodata
+  path: srv/target/javaodata-exec.jar
+  random-route: true
+  services:
+  - demo-hanashared
+  - demo-service-uaa
+  env:
+    SET_LOGGING_LEVEL: '{ROOT: INFO, com.sap.cloud.sdk: INFO, package.to.log: DEBUG}'

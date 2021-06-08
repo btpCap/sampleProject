@@ -1,0 +1,329 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" Version="1.0" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="1.0" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+        <Schema Namespace="abeam.showcase.service.TESTORDER_SRV" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="Currencies">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="symbol" Type="Edm.String" MaxLength="5"/>
+                <NavigationProperty Name="texts" Relationship="abeam.showcase.service.TESTORDER_SRV.Currencies_texts_1" FromRole="Currencies" ToRole="Currencies_texts"/>
+                <NavigationProperty Name="localized" Relationship="abeam.showcase.service.TESTORDER_SRV.Currencies_localized" FromRole="Currencies" ToRole="Currencies_texts"/>
+            </EntityType>
+            <EntityType Name="Currencies_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" Nullable="false" MaxLength="14"/>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false" MaxLength="3"/>
+            </EntityType>
+            <EntityType Name="TTBL001">
+                <Key>
+                    <PropertyRef Name="OrdeNo"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="OrdeNo" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="country_code" Type="Edm.String" MaxLength="3"/>
+                <Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+                <NavigationProperty Name="item" Relationship="abeam.showcase.service.TESTORDER_SRV.TTBL001_item" FromRole="TTBL001" ToRole="TTBL002"/>
+                <NavigationProperty Name="country" Relationship="abeam.showcase.service.TESTORDER_SRV.TTBL001_country" FromRole="TTBL001" ToRole="Currencies"/>
+                <NavigationProperty Name="currency" Relationship="abeam.showcase.service.TESTORDER_SRV.TTBL001_currency" FromRole="TTBL001" ToRole="Currencies"/>
+            </EntityType>
+            <EntityType Name="TTBL001Set">
+                <Key>
+                    <PropertyRef Name="OrdeNo"/>
+                </Key>
+                <Property Name="OrdeNo" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="ItemNo" Type="Edm.String" MaxLength="5"/>
+            </EntityType>
+            <EntityType Name="TTBL002">
+                <Key>
+                    <PropertyRef Name="ItemNo"/>
+                    <PropertyRef Name="OrderNo_OrdeNo"/>
+                </Key>
+                <Property Name="ItemNo" Type="Edm.String" Nullable="false" MaxLength="5"/>
+                <Property Name="description" Type="Edm.String" MaxLength="20"/>
+                <Property Name="amount" Type="Edm.Int32"/>
+                <Property Name="OrderNo_OrdeNo" Type="Edm.String" Nullable="false" MaxLength="10"/>
+            </EntityType>
+            <Association Name="Currencies_texts_1">
+                <End Type="abeam.showcase.service.TESTORDER_SRV.Currencies" Multiplicity="*" Role="Currencies"/>
+                <End Type="abeam.showcase.service.TESTORDER_SRV.Currencies_texts" Multiplicity="*" Role="Currencies_texts">
+                    <OnDelete Action="Cascade"/>
+                </End>
+            </Association>
+            <Association Name="Currencies_localized">
+                <End Type="abeam.showcase.service.TESTORDER_SRV.Currencies" Multiplicity="*" Role="Currencies"/>
+                <End Type="abeam.showcase.service.TESTORDER_SRV.Currencies_texts" Multiplicity="0..1" Role="Currencies_texts"/>
+                <ReferentialConstraint>
+                    <Principal Role="Currencies_texts">
+                        <PropertyRef Name="code"/>
+                    </Principal>
+                    <Dependent Role="Currencies">
+                        <PropertyRef Name="code"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="TTBL001_item">
+                <End Type="abeam.showcase.service.TESTORDER_SRV.TTBL001" Multiplicity="*" Role="TTBL001"/>
+                <End Type="abeam.showcase.service.TESTORDER_SRV.TTBL002" Multiplicity="*" Role="TTBL002">
+                    <OnDelete Action="Cascade"/>
+                </End>
+            </Association>
+            <Association Name="TTBL001_country">
+                <End Type="abeam.showcase.service.TESTORDER_SRV.TTBL001" Multiplicity="*" Role="TTBL001"/>
+                <End Type="abeam.showcase.service.TESTORDER_SRV.Currencies" Multiplicity="0..1" Role="Currencies"/>
+                <ReferentialConstraint>
+                    <Principal Role="Currencies">
+                        <PropertyRef Name="code"/>
+                    </Principal>
+                    <Dependent Role="TTBL001">
+                        <PropertyRef Name="country_code"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="TTBL001_currency">
+                <End Type="abeam.showcase.service.TESTORDER_SRV.TTBL001" Multiplicity="*" Role="TTBL001"/>
+                <End Type="abeam.showcase.service.TESTORDER_SRV.Currencies" Multiplicity="0..1" Role="Currencies"/>
+                <ReferentialConstraint>
+                    <Principal Role="Currencies">
+                        <PropertyRef Name="code"/>
+                    </Principal>
+                    <Dependent Role="TTBL001">
+                        <PropertyRef Name="currency_code"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
+                <EntitySet Name="Currencies" EntityType="abeam.showcase.service.TESTORDER_SRV.Currencies"/>
+                <EntitySet Name="Currencies_texts" EntityType="abeam.showcase.service.TESTORDER_SRV.Currencies_texts"/>
+                <EntitySet Name="TTBL001" EntityType="abeam.showcase.service.TESTORDER_SRV.TTBL001"/>
+                <EntitySet Name="TTBL001Set" EntityType="abeam.showcase.service.TESTORDER_SRV.TTBL001Set"/>
+                <EntitySet Name="TTBL002" EntityType="abeam.showcase.service.TESTORDER_SRV.TTBL002"/>
+                <AssociationSet Name="Currencies_texts_1" Association="abeam.showcase.service.TESTORDER_SRV.Currencies_texts_1">
+                    <End EntitySet="Currencies" Role="Currencies"/>
+                    <End EntitySet="Currencies_texts" Role="Currencies_texts"/>
+                </AssociationSet>
+                <AssociationSet Name="Currencies_localized" Association="abeam.showcase.service.TESTORDER_SRV.Currencies_localized">
+                    <End EntitySet="Currencies" Role="Currencies"/>
+                    <End EntitySet="Currencies_texts" Role="Currencies_texts"/>
+                </AssociationSet>
+                <AssociationSet Name="TTBL001_item" Association="abeam.showcase.service.TESTORDER_SRV.TTBL001_item">
+                    <End EntitySet="TTBL001" Role="TTBL001"/>
+                    <End EntitySet="TTBL002" Role="TTBL002"/>
+                </AssociationSet>
+                <AssociationSet Name="TTBL001_country" Association="abeam.showcase.service.TESTORDER_SRV.TTBL001_country">
+                    <End EntitySet="TTBL001" Role="TTBL001"/>
+                    <End EntitySet="Currencies" Role="Currencies"/>
+                </AssociationSet>
+                <AssociationSet Name="TTBL001_currency" Association="abeam.showcase.service.TESTORDER_SRV.TTBL001_currency">
+                    <End EntitySet="TTBL001" Role="TTBL001"/>
+                    <End EntitySet="Currencies" Role="Currencies"/>
+                </AssociationSet>
+            </EntityContainer>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="abeam.showcase.service.TESTORDER_SRV.Currencies">
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.Identification">
+                    <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="name"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="abeam.showcase.service.TESTORDER_SRV.Currencies/name">
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Name"/>
+            </Annotations>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="abeam.showcase.service.TESTORDER_SRV.Currencies/descr">
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="abeam.showcase.service.TESTORDER_SRV.Currencies/code">
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Currency Code"/>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Text" Path="name"/>
+            </Annotations>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="abeam.showcase.service.TESTORDER_SRV.Currencies/symbol">
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Currency Symbol"/>
+            </Annotations>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="abeam.showcase.service.TESTORDER_SRV.Currencies_texts/name">
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Name"/>
+            </Annotations>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="abeam.showcase.service.TESTORDER_SRV.Currencies_texts/descr">
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="abeam.showcase.service.TESTORDER_SRV.Currencies_texts/code">
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Currency Code"/>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Text" Path="name"/>
+            </Annotations>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="abeam.showcase.service.TESTORDER_SRV.TTBL001/createdAt">
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Created On"/>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.Computed" Bool="true"/>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.Immutable" Bool="true"/>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.HiddenFilter" Bool="true"/>
+            </Annotations>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="abeam.showcase.service.TESTORDER_SRV.TTBL001/createdBy">
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Created By"/>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.Computed" Bool="true"/>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.Description" String="User&apos;s unique ID"/>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.Immutable" Bool="true"/>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.HiddenFilter" Bool="true"/>
+            </Annotations>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="abeam.showcase.service.TESTORDER_SRV.TTBL001/modifiedAt">
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Changed On"/>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.Computed" Bool="true"/>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.HiddenFilter" Bool="true"/>
+            </Annotations>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="abeam.showcase.service.TESTORDER_SRV.TTBL001/modifiedBy">
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Changed By"/>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.Computed" Bool="true"/>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.Description" String="User&apos;s unique ID"/>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.HiddenFilter" Bool="true"/>
+            </Annotations>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="abeam.showcase.service.TESTORDER_SRV.TTBL001/country">
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Currency"/>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.Description" String="Currency code as specified by ISO 4217"/>
+            </Annotations>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="abeam.showcase.service.TESTORDER_SRV.TTBL001/currency">
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Currency"/>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.Description" String="Currency code as specified by ISO 4217"/>
+            </Annotations>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="abeam.showcase.service.TESTORDER_SRV.TTBL001/country_code">
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Currency"/>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.ValueList">
+                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListType">
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Currency"/>
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="CollectionPath" String="Currencies"/>
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Parameters">
+                            <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterInOut">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="LocalDataProperty" PropertyPath="country_code"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="code"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="name"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.Description" String="Currency code as specified by ISO 4217"/>
+            </Annotations>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="abeam.showcase.service.TESTORDER_SRV.TTBL001/currency_code">
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Currency"/>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.ValueList">
+                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListType">
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Currency"/>
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="CollectionPath" String="Currencies"/>
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Parameters">
+                            <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterInOut">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="LocalDataProperty" PropertyPath="currency_code"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="code"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="name"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.Description" String="Currency code as specified by ISO 4217"/>
+            </Annotations>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="abeam.showcase.service.TESTORDER_SRV.TTBL001Set">
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.Facets">
+                    <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.CollectionFacet">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="header"/>
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ID" String="head"/>
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Facets">
+                                <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet">
+                                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.FieldGroup#head"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.CollectionFacet">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Order Detail"/>
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ID" String="Detail"/>
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Facets">
+                                <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet">
+                                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.FieldGroup#item"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.FieldGroup" Qualifier="head">
+                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.FieldGroupType">
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Data">
+                            <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="OrdeNo"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.FieldGroup" Qualifier="item">
+                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.FieldGroupType">
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Data">
+                            <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="ItemNo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="item No"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.HeaderInfo">
+                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.HeaderInfoType">
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Description">
+                            <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="OrdeNo"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Title">
+                            <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="OrdeNo"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="TypeName" String="Order Detail"/>
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="TypeNamePlural" String="Orders"/>
+                    </Record>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.LineItem">
+                    <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="OrdeNo"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.SelectionFields">
+                    <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                        <PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">OrdeNo</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

@@ -1,0 +1,84 @@
+## Generated mta.yaml based on template version 0.4.0
+## appName = javaodata
+## language=java; multiTenant=false
+## approuter=
+_schema-version: '3.1'
+ID: javaodata
+version: 1.0.0-SNAPSHOT
+description: "javaodata application"
+parameters:
+  enable-parallel-deployments: true
+   
+build-parameters:
+  before-all:
+   - builder: custom
+     commands:
+      - npm install --production
+      - npx -p @sap/cds-dk cds build --production
+
+modules:
+ # --------------------- SERVER MODULE ------------------------
+ - name: javaodata-srv
+ # ------------------------------------------------------------
+   type: java
+   path: srv
+   build-parameters:
+     builder: custom
+     commands: [ mvn clean package ]
+     build-result: "target/*.[wj]ar"
+   requires:
+    # Resources extracted from CAP configuration
+    - name: javaodata-db
+      properties:
+        SPRING_PROFILES_ACTIVE: cloud
+    - name: demo-service-uaa
+   provides:
+    - name: srv-api      # required by consumers of CAP services (e.g. approuter)
+      properties:
+        srv-url: ${default-url}
+
+ # -------------------- SIDECAR MODULE ------------------------
+ - name: javaodata-db-deployer
+ # ------------------------------------------------------------
+   type: hdb
+   path: db  
+   parameters:
+     buildpack: nodejs_buildpack
+   requires:
+    # 'hana' and 'xsuaa' resources extracted from CAP configuration
+    - name: javaodata-db
+    - name: demo-service-uaa
+
+ - name: javaodata-app-router
+   type: approuter.nodejs
+   path: approuter
+   parameters:
+    disk-quota: 256M
+    memory: 256M
+   requires:
+    - name: demo-service-uaa
+    - name: srv-api
+      group: destinations
+      properties:
+        name: srv-api
+        url: "~{srv-url}"
+        forwardAuthToken: true  
+
+resources:
+ # services extracted from CAP configuration
+ # 'service-plan' can be configured via 'cds.requires.<name>.vcap.plan'
+# ------------------------------------------------------------
+ - name: javaodata-db
+# ------------------------------------------------------------
+   type: com.sap.xs.hdi-container
+   parameters:
+     service: hana  # or 'hanatrial' on trial landscapes
+     service-plan: hdi-shared
+   properties:
+     hdi-service-name: ${service-name}
+ - name: demo-service-uaa
+   type: org.cloudfoundry.managed-service
+   parameters:
+     service: xsuaa
+     service-plan: application
+     path: ./gen/xs-security.json

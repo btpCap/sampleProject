@@ -1,0 +1,75 @@
+_schema-version: "3.2"
+ID: FioriApp_deep
+version: 0.0.1
+modules:
+- name: FioriApp_deep-router
+  type: approuter.nodejs
+  path: cf/router
+  requires:
+  - name: FioriApp_deep-html5-repo-runtime
+  - name: FioriApp_deep-uaa
+  - name: FioriApp_deep-destination
+    group: destinations
+    properties:
+      forwardAuthToken: false
+      name: ui5
+      url: https://ui5.sap.com
+  - name: FioriApp_deep-connectivity
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+    routes:
+    - route: https://FioriApp_deep-${org}-${space}.${default-domain}
+- name: FioriApp_deep-deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: FioriApp_deep-html5-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - testdeep.zip
+      name: testdeep
+      target-path: resources/
+- name: testdeep
+  type: html5
+  path: test_deep
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: FioriApp_deep-uaa
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: dedicated
+      xsappname: FioriApp_deep-${org}
+    service: xsuaa
+    service-plan: application
+- name: FioriApp_deep-html5-repo-runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: FioriApp_deep-destination
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-plan: lite
+- name: FioriApp_deep-html5-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+- name: FioriApp_deep-connectivity
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: connectivity
+    service-plan: lite

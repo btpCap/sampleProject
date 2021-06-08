@@ -1,0 +1,47 @@
+_schema-version: "3.2"
+ID: fioriApp_01
+description: Fiori elements app
+version: 0.0.1
+modules:
+- name: fioriApp_01-router
+  type: approuter.nodejs
+  path: router
+  requires:
+  - name: fioriApp_01-html5-repo-runtime
+  - name: fioriApp_01-uaa
+  - name: fioriApp_01-destination
+    group: destinations
+    properties:
+      forwardAuthToken: false
+      name: ui5
+      url: https://ui5.sap.com
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+resources:
+- name: fioriApp_01-uaa
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: dedicated
+      xsappname: fioriApp_01-${space-guid}
+    service: xsuaa
+    service-plan: application
+- name: fioriApp_01-html5-repo-runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: fioriApp_01-destination
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-plan: lite
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install

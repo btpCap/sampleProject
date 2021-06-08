@@ -1,0 +1,75 @@
+_schema-version: "3.2"
+ID: Cap-APP_2
+version: 0.0.1
+modules:
+- name: Cap-APP_2-router
+  type: approuter.nodejs
+  path: cf/router
+  requires:
+  - name: Cap-APP_2-html5-repo-runtime
+  - name: Cap-APP_2-uaa
+  - name: Cap-APP_2-destination
+    group: destinations
+    properties:
+      forwardAuthToken: false
+      name: ui5
+      url: https://ui5.sap.com
+  - name: Cap-APP_2-connectivity
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+    routes:
+    - route: https://Cap-APP_2-${org}-${space}.${default-domain}
+- name: Cap-APP_2-deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: Cap-APP_2-html5-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - fioriapp2.zip
+      name: fioriapp2
+      target-path: resources/
+- name: fioriapp2
+  type: html5
+  path: fioriapp2
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: Cap-APP_2-uaa
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: dedicated
+      xsappname: Cap-APP_2-${org}
+    service: xsuaa
+    service-plan: application
+- name: Cap-APP_2-html5-repo-runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: Cap-APP_2-destination
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-plan: lite
+- name: Cap-APP_2-html5-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+- name: Cap-APP_2-connectivity
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: connectivity
+    service-plan: lite

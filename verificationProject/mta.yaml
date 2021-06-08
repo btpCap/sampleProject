@@ -1,0 +1,95 @@
+## Generated mta.yaml based on template version 0.4.0
+## appName = verificationProject
+## language=java; multiTenant=false
+## approuter=
+_schema-version: '3.1'
+ID: verificationProject
+version: 1.0.0-SNAPSHOT
+description: "verificationProject application"
+parameters:
+  enable-parallel-deployments: true
+   
+build-parameters:
+  before-all:
+   - builder: custom
+     commands:
+      - npm install --production
+      - npx -p @sap/cds-dk cds build --production
+      - cf unbind-service verificationProject-db-deployer verificationProject-db
+      - cf unbind-service verificationProject-srv verificationProject-db
+      - cf delete-service verificationProject-db -f
+
+modules:
+ # --------------------- SERVER MODULE ------------------------
+ - name: verificationProject-srv
+ # ------------------------------------------------------------
+   type: java
+   path: srv
+   properties:
+     SPRING_PROFILES_ACTIVE: cloud
+     SET_LOGGING_LEVEL: '{ROOT: INFO, com.sap.cloud.sdk: INFO, package.to.log: DEBUG}'
+   build-parameters:
+     builder: custom
+     commands: [ mvn clean package ]
+     build-result: "target/*.[wj]ar"
+   requires:
+    # Resources extracted from CAP configuration
+    - name: verificationProject-db
+    # add
+    - name: demo-service-uaa2
+   provides:
+    - name: srv-api      # required by consumers of CAP services (e.g. approuter)
+      properties:
+        srv-url: ${default-url}
+
+ # -------------------- SIDECAR MODULE ------------------------
+ - name: verificationProject-db-deployer
+ # ------------------------------------------------------------
+   type: hdb
+   path: db  
+   parameters:
+     buildpack: nodejs_buildpack
+   requires:
+    # 'hana' and 'xsuaa' resources extracted from CAP configuration
+    - name: verificationProject-db
+    # add
+    - name: demo-service-uaa2
+
+ # -------------------- APP ROUTER MODULE ---------------------
+ - name: verificationProject-app-router
+ # ------------------------------------------------------------
+   type: approuter.nodejs
+   path: app
+   parameters:
+     disk-quota: 256M
+     memory: 256M
+   requires:
+     - name: demo-service-uaa2
+     - name: srv-api
+       group: destinations
+       properties:
+         name: srv-api
+         url: "~{srv-url}"
+         forwardAuthToken: true  
+
+
+resources:
+ # services extracted from CAP configuration
+ # 'service-plan' can be configured via 'cds.requires.<name>.vcap.plan'
+# ------------------------------------------------------------
+ - name: verificationProject-db
+# ------------------------------------------------------------
+   type: com.sap.xs.hdi-container
+   parameters:
+     service: hanatrail  # or 'hanatrial' on trial landscapes
+     service-plan: hdi-shared
+   properties:
+     hdi-service-name: ${service-name}
+# add
+ - name: demo-service-uaa2
+   type: org.cloudfoundry.managed-service
+   parameters:
+     service: xsuaa
+     service-plan: application
+     path: ./gen/xs-security.json      
+

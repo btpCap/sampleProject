@@ -1,0 +1,524 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" Version="1.0" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="1.0" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+        <Schema Namespace="abeam.showcase.service.ZGBLMTORDER_SRV_new" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="ENTITY001Set_new">
+                <Key>
+                    <PropertyRef Name="orderNo"/>
+                </Key>
+                <Property Name="orderNo" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="statusNo" Type="Edm.String" MaxLength="10"/>
+                <Property Name="productID" Type="Edm.String" MaxLength="16"/>
+                <Property Name="customerNo" Type="Edm.String" MaxLength="12"/>
+                <Property Name="issDate" Type="Edm.DateTime" sap:display-format="Date"/>
+                <Property Name="issTime" Type="Edm.Time"/>
+                <Property Name="issContent" Type="Edm.String" MaxLength="200"/>
+                <Property Name="repPersonNo" Type="Edm.String" MaxLength="12"/>
+                <Property Name="dateFrom" Type="Edm.DateTime" sap:display-format="Date"/>
+                <Property Name="timeFrom" Type="Edm.Time"/>
+                <Property Name="dateTo" Type="Edm.DateTime" sap:display-format="Date"/>
+                <Property Name="timeTo" Type="Edm.Time"/>
+                <Property Name="repContent" Type="Edm.String" MaxLength="200"/>
+                <Property Name="price" Type="Edm.Decimal" Precision="14" Scale="3"/>
+                <Property Name="currKey" Type="Edm.String" MaxLength="5"/>
+                <Property Name="feedBack" Type="Edm.String" MaxLength="1"/>
+                <Property Name="deleteFlag" Type="Edm.Boolean"/>
+                <Property Name="zaction" Type="Edm.Boolean"/>
+                <NavigationProperty Name="foregin1" Relationship="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY001Set_new_foregin1" FromRole="ENTITY001Set_new" ToRole="ENTITY005Set"/>
+                <NavigationProperty Name="foregin2" Relationship="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY001Set_new_foregin2" FromRole="ENTITY001Set_new" ToRole="ENTITY002Set"/>
+                <NavigationProperty Name="foregin3" Relationship="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY001Set_new_foregin3" FromRole="ENTITY001Set_new" ToRole="ENTITY003Set"/>
+                <NavigationProperty Name="foregin4" Relationship="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY001Set_new_foregin4" FromRole="ENTITY001Set_new" ToRole="ENTITY004Set"/>
+            </EntityType>
+            <EntityType Name="ENTITY002Set">
+                <Key>
+                    <PropertyRef Name="productID"/>
+                    <PropertyRef Name="languageKey"/>
+                </Key>
+                <Property Name="productID" Type="Edm.String" Nullable="false" MaxLength="16"/>
+                <Property Name="languageKey" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="productName" Type="Edm.String" MaxLength="24"/>
+                <Property Name="productCategory" Type="Edm.String" MaxLength="24"/>
+                <Property Name="productInfo" Type="Edm.String" MaxLength="200"/>
+                <Property Name="technicalInfo" Type="Edm.String" MaxLength="200"/>
+                <Property Name="additionalInfo" Type="Edm.String" MaxLength="200"/>
+                <Property Name="imageURL" Type="Edm.String" MaxLength="200"/>
+                <Property Name="partsInfo" Type="Edm.String" MaxLength="200"/>
+            </EntityType>
+            <EntityType Name="ENTITY003Set">
+                <Key>
+                    <PropertyRef Name="customerNo"/>
+                    <PropertyRef Name="languageKey"/>
+                </Key>
+                <Property Name="customerNo" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="languageKey" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="customerName1" Type="Edm.String" MaxLength="35"/>
+                <Property Name="customerName2" Type="Edm.String" MaxLength="35"/>
+                <Property Name="telepNo" Type="Edm.String" MaxLength="16"/>
+                <Property Name="faxNo" Type="Edm.String" MaxLength="31"/>
+                <Property Name="emailAdd" Type="Edm.String" MaxLength="132"/>
+                <Property Name="countryName" Type="Edm.String" MaxLength="15"/>
+                <Property Name="cityName" Type="Edm.String" MaxLength="35"/>
+                <Property Name="streetNo" Type="Edm.String" MaxLength="35"/>
+                <Property Name="postalNo" Type="Edm.String" MaxLength="10"/>
+            </EntityType>
+            <EntityType Name="ENTITY004Set">
+                <Key>
+                    <PropertyRef Name="repPersonNo"/>
+                    <PropertyRef Name="languageKey"/>
+                </Key>
+                <Property Name="repPersonNo" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="languageKey" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="repPersonName1" Type="Edm.String" MaxLength="35"/>
+                <Property Name="repPersonName2" Type="Edm.String" MaxLength="35"/>
+                <Property Name="telepNo" Type="Edm.String" MaxLength="16"/>
+                <Property Name="faxNo" Type="Edm.String" MaxLength="31"/>
+                <Property Name="emailAdd" Type="Edm.String" MaxLength="132"/>
+                <Property Name="countryName" Type="Edm.String" MaxLength="15"/>
+                <Property Name="cityName" Type="Edm.String" MaxLength="35"/>
+                <Property Name="streetNo" Type="Edm.String" MaxLength="35"/>
+                <Property Name="postalNo" Type="Edm.String" MaxLength="10"/>
+            </EntityType>
+            <EntityType Name="ENTITY005Set">
+                <Key>
+                    <PropertyRef Name="orderNo"/>
+                </Key>
+                <Property Name="orderNo" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="itemNo" Type="Edm.String" MaxLength="2"/>
+                <Property Name="userName" Type="Edm.String" MaxLength="12"/>
+                <Property Name="status" Type="Edm.String" MaxLength="10"/>
+                <Property Name="changeDate" Type="Edm.DateTime" sap:display-format="Date"/>
+                <Property Name="changeBy" Type="Edm.Time"/>
+            </EntityType>
+            <Association Name="ENTITY001Set_new_foregin1">
+                <End Type="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY001Set_new" Multiplicity="*" Role="ENTITY001Set_new"/>
+                <End Type="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY005Set" Multiplicity="*" Role="ENTITY005Set">
+                    <OnDelete Action="Cascade"/>
+                </End>
+            </Association>
+            <Association Name="ENTITY001Set_new_foregin2">
+                <End Type="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY001Set_new" Multiplicity="*" Role="ENTITY001Set_new"/>
+                <End Type="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY002Set" Multiplicity="0..1" Role="ENTITY002Set"/>
+                <ReferentialConstraint>
+                    <Principal Role="ENTITY002Set">
+                        <PropertyRef Name="productID"/>
+                    </Principal>
+                    <Dependent Role="ENTITY001Set_new">
+                        <PropertyRef Name="productID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ENTITY001Set_new_foregin3">
+                <End Type="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY001Set_new" Multiplicity="*" Role="ENTITY001Set_new"/>
+                <End Type="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY003Set" Multiplicity="0..1" Role="ENTITY003Set"/>
+                <ReferentialConstraint>
+                    <Principal Role="ENTITY003Set">
+                        <PropertyRef Name="customerNo"/>
+                    </Principal>
+                    <Dependent Role="ENTITY001Set_new">
+                        <PropertyRef Name="customerNo"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ENTITY001Set_new_foregin4">
+                <End Type="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY001Set_new" Multiplicity="*" Role="ENTITY001Set_new"/>
+                <End Type="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY004Set" Multiplicity="0..1" Role="ENTITY004Set"/>
+                <ReferentialConstraint>
+                    <Principal Role="ENTITY004Set">
+                        <PropertyRef Name="repPersonNo"/>
+                    </Principal>
+                    <Dependent Role="ENTITY001Set_new">
+                        <PropertyRef Name="repPersonNo"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
+                <EntitySet Name="ENTITY001Set_new" EntityType="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY001Set_new"/>
+                <EntitySet Name="ENTITY002Set" EntityType="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY002Set"/>
+                <EntitySet Name="ENTITY003Set" EntityType="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY003Set"/>
+                <EntitySet Name="ENTITY004Set" EntityType="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY004Set"/>
+                <EntitySet Name="ENTITY005Set" EntityType="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY005Set"/>
+                <AssociationSet Name="ENTITY001Set_new_foregin1" Association="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY001Set_new_foregin1">
+                    <End EntitySet="ENTITY001Set_new" Role="ENTITY001Set_new"/>
+                    <End EntitySet="ENTITY005Set" Role="ENTITY005Set"/>
+                </AssociationSet>
+                <AssociationSet Name="ENTITY001Set_new_foregin2" Association="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY001Set_new_foregin2">
+                    <End EntitySet="ENTITY001Set_new" Role="ENTITY001Set_new"/>
+                    <End EntitySet="ENTITY002Set" Role="ENTITY002Set"/>
+                </AssociationSet>
+                <AssociationSet Name="ENTITY001Set_new_foregin3" Association="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY001Set_new_foregin3">
+                    <End EntitySet="ENTITY001Set_new" Role="ENTITY001Set_new"/>
+                    <End EntitySet="ENTITY003Set" Role="ENTITY003Set"/>
+                </AssociationSet>
+                <AssociationSet Name="ENTITY001Set_new_foregin4" Association="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY001Set_new_foregin4">
+                    <End EntitySet="ENTITY001Set_new" Role="ENTITY001Set_new"/>
+                    <End EntitySet="ENTITY004Set" Role="ENTITY004Set"/>
+                </AssociationSet>
+            </EntityContainer>
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="abeam.showcase.service.ZGBLMTORDER_SRV_new.ENTITY001Set_new">
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.DataPoint" Qualifier="Rating">
+                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataPointType">
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="TargetValue" Int="5"/>
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Title" String="Rating"/>
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="feedBack"/>
+                    </Record>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.DataPoint" Qualifier="status">
+                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataPointType">
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Title" String="Status"/>
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="statusNo"/>
+                    </Record>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.Facets">
+                    <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.CollectionFacet">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Product Info Detail"/>
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ID" String="Product"/>
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Facets">
+                                <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet">
+                                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.FieldGroup#ProductHomepage"/>
+                                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String=""/>
+                                    </Record>
+                                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet">
+                                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.FieldGroup#PartsInformation"/>
+                                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String=""/>
+                                    </Record>
+                                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet">
+                                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.FieldGroup#TechnicalInformation"/>
+                                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String=""/>
+                                    </Record>
+                                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet">
+                                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.FieldGroup#AdditionalInformation"/>
+                                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String=""/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.CollectionFacet">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="maintenance Information"/>
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ID" String="Repairinfor"/>
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Facets">
+                                <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet">
+                                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.FieldGroup#Main"/>
+                                    </Record>
+                                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet">
+                                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.FieldGroup#MT1"/>
+                                    </Record>
+                                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet">
+                                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.FieldGroup#MT2"/>
+                                    </Record>
+                                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet">
+                                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.FieldGroup#MT3"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.CollectionFacet">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="maintenance history"/>
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ID" String="History"/>
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Facets">
+                                <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet">
+                                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.LineItem#history"/>
+                                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="maintenance history"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.CollectionFacet">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Customer infomation"/>
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ID" String="Customer"/>
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Facets">
+                                <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet">
+                                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.FieldGroup#Customerformation"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.FieldGroup" Qualifier="AdditionalInformation">
+                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.FieldGroupType">
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Data">
+                            <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataFieldWithUrl">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Url" Path="foregin2/additionalInfo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin2/additionalInfo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="additional Information"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.FieldGroup" Qualifier="Customerformation">
+                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.FieldGroupType">
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Data">
+                            <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin3/customerNo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Customer No"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin3/customerName1"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Customer Name"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin3/customerName2"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin3/emailAdd"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="E-mail"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin3/streetNo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Street"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin3/cityName"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="City"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin3/countryName"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Country"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin3/postalNo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Postal Code"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin3/telepNo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Tel"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin3/faxNo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Fax"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.FieldGroup" Qualifier="MT1">
+                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.FieldGroupType">
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Data">
+                            <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="dateFrom"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Date From"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="dateTo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Date To"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin4/countryName"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Country"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin4/streetNo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Street"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin4/postalNo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Postal Code"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.FieldGroup" Qualifier="MT2">
+                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.FieldGroupType">
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Data">
+                            <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin4/repPersonNo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Repair Person No"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin4/repPersonName1"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Repair Person Name"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin4/telepNo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Telephone Number"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin4/faxNo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Fax Numbe"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin4/emailAdd"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="E-Mail"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.FieldGroup" Qualifier="MT3">
+                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.FieldGroupType">
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Data">
+                            <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="price"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Price"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="repContent"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Repair Content"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.FieldGroup" Qualifier="Main">
+                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.FieldGroupType">
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Data">
+                            <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin2/productCategory"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin2/productName"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Product Name"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="productID"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Product ID"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderNo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Order No"/>
+                                </Record>
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="dateFrom"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Date From"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.FieldGroup" Qualifier="PartsInformation">
+                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.FieldGroupType">
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Data">
+                            <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataFieldWithUrl">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Url" Path="foregin2/partsInfo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin2/partsInfo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Parts Infomation"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.FieldGroup" Qualifier="ProductHomepage">
+                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.FieldGroupType">
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Data">
+                            <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataFieldWithUrl">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Url" Path="foregin2/productInfo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin2/productInfo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Product Home Page"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.FieldGroup" Qualifier="TechnicalInformation">
+                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.FieldGroupType">
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Data">
+                            <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                                <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataFieldWithUrl">
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Url" Path="foregin2/technicalInfo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin2/technicalInfo"/>
+                                    <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="technicalInformation"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.HeaderFacets">
+                    <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.FieldGroup#Main"/>
+                        </Record>
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.DataPoint#status"/>
+                        </Record>
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.DataPoint#Rating"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.HeaderInfo">
+                    <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.HeaderInfoType">
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Description">
+                            <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="dateFrom"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ImageUrl" Path="foregin2/imageURL"/>
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Title">
+                            <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                                <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderNo"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="TypeName" String="Order Detail"/>
+                        <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="TypeNamePlural" String="Orders"/>
+                    </Record>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.LineItem">
+                    <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderNo"/>
+                        </Record>
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="statusNo"/>
+                        </Record>
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="customerNo"/>
+                        </Record>
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="productID"/>
+                        </Record>
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="repPersonNo"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.LineItem" Qualifier="history">
+                    <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin1/orderNo"/>
+                        </Record>
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin1/itemNo"/>
+                        </Record>
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin1/status"/>
+                        </Record>
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin1/changeDate"/>
+                        </Record>
+                        <Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField">
+                            <PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="foregin1/changeBy"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.SelectionFields">
+                    <Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                        <PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">orderNo</PropertyPath>
+                        <PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">statusNo</PropertyPath>
+                        <PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">productID</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run bookstore-2",
+      "type": "java",
+      "request": "launch",
+      "mainClass": "com.sap.cap.bookstore.Application",
+      "projectName": "bookstore",
+      "preLaunchTask": "Build bookstore",
+      "cwd": "${workspaceFolder}/bookstore",
+      "envFile": "${workspaceFolder}/bookstore/.env2",
+      "args": [
+        "--spring.profiles.active=default"
+      ],
+      "env": {
+        "run.config": "{\"handlerId\":\"cap_run_config_handler_id\",\"runnableId\":\"{\\\"projectPath\\\":\\\"/home/user/projects/bookstore\\\",\\\"profileName\\\":\\\"default\\\"}\"}"
+      }
+    }
+  ]
+}
